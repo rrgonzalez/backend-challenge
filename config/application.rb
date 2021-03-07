@@ -33,5 +33,11 @@ module EverlywellBackendChallenge
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Set up logging
+    Rails.logger = ActiveSupport::Logger.new(STDOUT)
+    Rails.logger.formatter = ::Logger::Formatter.new
+    config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+    config.log_level = :info
   end
 end
