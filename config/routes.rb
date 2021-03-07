@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :members, only: [:create, :index, :show] do
+  resources :member, only: [:create, :index, :show] do
     post :add_friend, on: :member
   end
 
