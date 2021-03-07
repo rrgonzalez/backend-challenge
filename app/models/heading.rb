@@ -4,4 +4,6 @@ class Heading
 
   field :pretty_print, type: String
   field :hashed_terms, type: Set
+
+  belongs_to :member
 end
