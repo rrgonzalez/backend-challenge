@@ -6,6 +6,8 @@ class MemberController < ApplicationController
       website_url: params[:website_url]
     )
 
+    @member.website_short_url = ShortUrlController::short_url(long_url: @member.website_url)
+
     res = @member.save!
 
     if res
