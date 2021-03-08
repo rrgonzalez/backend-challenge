@@ -54,7 +54,7 @@ class MemberController < ApplicationController
         hashed_terms.add(term.to_sym)
       end
 
-      heading = Heading.create!(member: @member, pretty_print: heading_str, hashed_terms: hashed_terms)
+      heading = Heading.create!(member: member, pretty_print: heading_str, hashed_terms: hashed_terms)
       headings << heading
     end
 
