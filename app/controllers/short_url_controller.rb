@@ -1,4 +1,4 @@
-class ShortUrlController < ApplicationController
+class ShortUrlController
 
   def self.short_url(long_url)
     return '' if long_url.blank?
