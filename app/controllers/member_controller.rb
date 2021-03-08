@@ -6,7 +6,8 @@ class MemberController < ApplicationController
     @member = Member.new(
       name: params[:name],
       website_url: params[:website_url],
-      friends: []
+      friends: [],
+      friends_count: 0
     )
 
     # Shorten URL
@@ -28,8 +29,9 @@ class MemberController < ApplicationController
   end
 
   def index
-    @member = Member.all
-    render json: @member
+    @members = Member.only(:name, :website_short_url, :friends_count)
+
+    render json: @members
   end
 
   def show
@@ -45,15 +47,10 @@ class MemberController < ApplicationController
       return
     end
 
-    list = @member.friends
-
-    Rails.logger.info
-
-    list << friend
+    @member.friends << friend
+    @member.friends_count = @member.friends.count
 
     res = @member.save!
-
-    Rails.logger.info @member.friends
 
     if res
       render json: @member, status: 201

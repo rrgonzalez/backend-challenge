@@ -5,6 +5,7 @@ class Member
   field :name, type: String
   field :website_url, type: String
   field :website_short_url, type: String
+  field :friends_count, type: Integer
 
   has_many :headings
   has_and_belongs_to_many :friends,
