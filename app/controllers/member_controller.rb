@@ -77,6 +77,23 @@ class MemberController < ApplicationController
     end
   end
 
+  def search_closest_expert
+    terms = params[:terms]
+
+    target_hashed_terms = []
+    terms.each do |term|
+      target_hashed_terms << term.to_sym
+    end
+
+    result = SearchExpertController.search_closest_expert(@member, target_hashed_terms)
+
+    if result.blank?
+      render json: {"message": "No expert found"}, status: 404
+    else
+      render json: {"path_to_expert": result}, status: 200
+    end
+  end
+
   private
 
   def build_headings(heading_strs, member)
