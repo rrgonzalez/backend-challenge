@@ -35,6 +35,23 @@ class MemberController < ApplicationController
   end
 
   def show
+    @ext_member = Hash.new
+    @ext_member[:name] = @member.name
+    @ext_member[:website_url] = @member.website_url
+    @ext_member[:website_short_url] = @member.website_short_url
+
+    @ext_member[:headings] = []
+
+    @member.headings.each do |h|
+      @ext_member[:headings] << h.pretty_print
+    end
+
+    @ext_member[:friends_pages] = []
+    @member.friends.each do |f|
+      @ext_member[:friends_pages] << request.base_url + '/' + f.id
+    end
+
+    render json: @ext_member
   end
 
   def add_friend
