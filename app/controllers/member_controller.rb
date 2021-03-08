@@ -34,6 +34,31 @@ class MemberController < ApplicationController
   end
 
   def add_friend
+    render '{ "message":"Param friend_id is mandatory" }', status: 400 unless params.key?(:friend_id)
+
+    begin
+      friend = Member.find(params[:friend_id])
+    rescue Mongoid::Errors::DocumentNotFound
+      render '{ "message":"Friend member not found" }', status: 404
+      return
+    end
+
+    list = @member.friends
+
+    Rails.logger.info
+
+    list << friend
+
+    res = @member.save!
+
+    Rails.logger.info @member.friends
+
+    if res
+      render json: @member, status: 201
+    else
+      @err = { 'message' => 'Error adding the Friend' }
+      render json: @err, status: 500
+    end
   end
 
   private
