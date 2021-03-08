@@ -28,6 +28,8 @@ class MemberController < ApplicationController
   end
 
   def index
+    @member = Member.all
+    render json: @member
   end
 
   def show
