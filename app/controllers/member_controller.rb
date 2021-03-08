@@ -69,6 +69,10 @@ class MemberController < ApplicationController
 
     res = @member.save!
 
+    friend.friends << @member
+    friend.friends_count = friend.friends.count
+    friend.save!
+
     if res
       render json: @member, status: 201
     else
