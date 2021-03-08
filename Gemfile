@@ -26,6 +26,9 @@ gem 'mongoid'
 # Shorten URL system
 gem 'bitly'
 
+# Crawler to pull h1-h3 headings
+gem 'metainspector'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
