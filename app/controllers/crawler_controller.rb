@@ -1,19 +1,22 @@
+require 'meta_inspector'
+
 class CrawlerController
 
   # Crawl headings (h1-h3) from page using classic BFS
   def self.crawl_headings(url)
+
     Rails.logger.info "STARTED crawl_headings on #{url}"
 
     queue = []
     visited = []
-    headings = []
+    headings = Set.new
 
     page = MetaInspector.new(url,
                              download_images: false,
                              allow_redirections: false,
                              connection_timeout: 10,
-                             read_timeout: 10,
-                             retries: 3)
+                             read_timeout: 30,
+                             retries: 4)
 
     queue.push(page.url)
 
@@ -36,20 +39,23 @@ class CrawlerController
 
         page.links.internal.each do |link|
           queue.push(link) unless link.include?('#') ||       # Exclude anchor links
+                                  link.include?('?') ||
                                   visited.include?(link) ||
                                   queue.include?(link)
         end
 
-      rescue MetaInspector::ParserError
+      rescue MetaInspector::RequestError,
+             MetaInspector::ParserError,
+             MetaInspector::TimeoutError
         Rails.logger.error "Error crawling page #{url}"
       end
 
     end
 
     Rails.logger.info "Found #{headings.length} headings"
-    Rails.logger.info "FINISHED crawl_headings on #{url}"
+    Rails.logger.info "FINISHED crawl_headings"
 
-    headings
+    headings.to_a
   end
 
 end

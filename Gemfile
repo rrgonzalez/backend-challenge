@@ -27,7 +27,7 @@ gem 'mongoid'
 gem 'bitly'
 
 # Crawler to pull h1-h3 headings
-gem 'metainspector'
+gem 'metainspector', '~> 5.11', '>= 5.11.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
