@@ -1,5 +1,7 @@
 class MemberController < ApplicationController
 
+  before_action :set_member, only: [:show, :add_friend]
+
   def create
     @member = Member.new(
       name: params[:name],
@@ -59,6 +61,10 @@ class MemberController < ApplicationController
     end
 
     headings
+  end
+
+  def set_member
+    @member = Member.find(params[:id])
   end
 
 end
